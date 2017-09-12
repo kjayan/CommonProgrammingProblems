@@ -1,4 +1,4 @@
-CPP-CommonProgrammingProblems
+CommonProgrammingProblems
 =============================
 
-Solutions to common programming questions
+Solutions to common programming questions asked in interviews
