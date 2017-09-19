@@ -5,6 +5,7 @@ public class Node {
     private int data;
     private Node left;
     private Node right;
+    private Node neighbour;
     private int hd;
 
     public Node(int data) {
@@ -46,6 +47,14 @@ public class Node {
 
     public void setHd(int hd) {
         this.hd = hd;
+    }
+
+    public Node getNeighbour() {
+        return neighbour;
+    }
+
+    public void setNeighbour(Node neighbour) {
+        this.neighbour = neighbour;
     }
 
     @Override

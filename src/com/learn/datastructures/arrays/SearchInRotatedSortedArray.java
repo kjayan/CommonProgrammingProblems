@@ -1,4 +1,4 @@
-package com.learn.common.arrays;
+package com.learn.datastructures.arrays;
 
 public class SearchInRotatedSortedArray{
 

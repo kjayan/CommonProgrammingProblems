@@ -127,11 +127,11 @@ public class TreeParser {
 
         int height = getHeight(node);
         for(int i=1;i<=height;i++){
-            printTopDownLevelOrderTraversal(node,i);
+            printGivenLevelTopDown(node,i);
         }
 
     }
-    private void printTopDownLevelOrderTraversal(Node node, int level){
+    private void printGivenLevelTopDown(Node node, int level){
         if(node == null){
             return;
         }
@@ -139,8 +139,8 @@ public class TreeParser {
             System.out.println(node.getData());
         }
         else if(level > 1) {
-            printTopDownLevelOrderTraversal(node.getLeft(), level - 1);
-            printTopDownLevelOrderTraversal(node.getRight(), level - 1);
+            printGivenLevelTopDown(node.getLeft(), level - 1);
+            printGivenLevelTopDown(node.getRight(), level - 1);
         }
     }
 
@@ -161,23 +161,249 @@ public class TreeParser {
     }
 
     public void topDownLevelOrderSpiralTraversal(Node node){
+        int height = getHeight(node);
+        boolean ltr = true;
+        for(int i=1;i<=height;i++){
+            printGivenLevelTopDownSpiral(node,i,ltr);
+            ltr = !ltr;
+        }
+    }
 
+    private void printGivenLevelTopDownSpiral(Node node, int level,boolean ltr){
+        if(node == null){
+            return;
+        }
+        if(level == 1){
+            System.out.println(node.getData());
+        }
+        else if (level > 1){
+            if(ltr) {
+                printGivenLevelTopDownSpiral(node.getLeft(), level - 1,ltr);
+                printGivenLevelTopDownSpiral(node.getRight(), level - 1,ltr);
+            }
+            else{
+                printGivenLevelTopDownSpiral(node.getLeft(), level - 1,ltr);
+                printGivenLevelTopDownSpiral(node.getRight(), level - 1,ltr);
+            }
+        }
+
+    }
+
+    public void printTopDownLevelOrderSpiralOptimized(Node node){
+        if(node == null){
+            return;
+        }
+
+        Stack<Node> stack1 = new Stack<>();
+        Stack<Node> stack2 = new Stack<>();
+
+        stack1.add(node);
+        while(!stack1.isEmpty() || !stack2.isEmpty()){
+
+            while(!stack1.isEmpty()){
+                Node temp = stack1.pop();
+                System.out.println(temp.getData());
+                if(temp.getRight() != null){
+                    stack2.push(temp.getRight());
+                }
+
+                if(temp.getLeft() != null){
+                    stack2.push(temp.getLeft());
+                }
+            }
+
+            while(!stack2.isEmpty()){
+                Node temp = stack2.pop();
+                System.out.println(temp.getData());
+
+                if(temp.getLeft() != null){
+                    stack1.push(temp.getLeft());
+                }
+
+                if(temp.getRight() != null){
+                    stack1.push(temp.getLeft());
+                }
+            }
+        }
     }
 
     public void BottomUpLevelOrderTraversal(Node node){
+        int height = getHeight(node);
+        for(int i=height;i>=1;i--){
+            printGivenLevelBottomUp(node,i);
+        }
+    }
 
+    private void printGivenLevelBottomUp(Node node, int level){
+        if(node == null){
+            return;
+        }
+        if(level == 1){
+            System.out.println(node.getData());
+        }
+        else if(level > 1){
+            printGivenLevelBottomUp(node.getLeft(),level-1);
+            printGivenLevelBottomUp(node.getRight(),level-1);
+        }
+
+    }
+
+    public void printBottomUpLevelOrderOptimized(Node node){
+        if(node == null){
+            return;
+        }
+        Stack<Node> stack = new Stack<>();
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(node);
+        while(!queue.isEmpty()){
+            Node temp = queue.remove();
+            stack.push(temp);
+            if(temp.getRight()!=null){
+                queue.add(temp.getRight());
+            }
+            if(temp.getLeft() != null){
+                queue.add(temp.getLeft());
+            }
+        }
+        while(!stack.isEmpty()){
+            Node temp = stack.pop();
+            System.out.println(temp.getData());
+        }
     }
 
     public void BottomUpLevelOrderSpiralTraversal(Node node){
+        int height = getHeight(node);
+        boolean ltr = true;
+        for(int i = height;i>=1;i--){
+            printGivenLevelBottomUpSpiral(node,i,ltr);
+            ltr = !ltr;
+        }
+    }
 
+    private void printGivenLevelBottomUpSpiral(Node node, int level,boolean ltr){
+        if(node == null){
+            return;
+        }
+        if(level == 1){
+            System.out.println(node.getData());
+        }
+        else if(level > 1){
+            if(ltr){
+                printGivenLevelBottomUp(node.getLeft(),level-1);
+                printGivenLevelBottomUp(node.getRight(),level-1);
+            }
+            else{
+                printGivenLevelBottomUp(node.getRight(),level-1);
+                printGivenLevelBottomUp(node.getLeft(),level-1);
+            }
+        }
+    }
+
+    public void printBottomUpLevelOrderSpiralOptimized(Node node){
+        if(node == null){
+            return;
+        }
+        Stack<Node> stack = new Stack<>();
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(node);
+        boolean ltr = true;
+        while(!queue.isEmpty()){
+            Node temp = queue.remove();
+            stack.push(temp);
+            if(ltr){
+                if(temp.getRight()!=null){
+                    queue.add(temp.getRight());
+                }
+                if(temp.getLeft() != null){
+                    queue.add(temp.getLeft());
+                }
+            }
+            else{
+                if(temp.getLeft() != null){
+                    queue.add(temp.getLeft());
+                }
+                if(temp.getRight()!=null){
+                    queue.add(temp.getRight());
+                }
+            }
+            ltr = !ltr;
+        }
+        while(!stack.isEmpty()){
+            Node temp = stack.pop();
+            System.out.println(temp.getData());
+        }
     }
 
     public void verticalOrderTraversal(Node node){
+        Map<Integer,List<Node>> map = new TreeMap<>();
+        int hd = 0;
+        getVerticalOrder(node,hd,map);
+        for (Map.Entry<Integer, List<Node>> entry : map.entrySet()){
+            System.out.println(entry.getValue());
+        }
+    }
 
+    private void getVerticalOrder(Node node, int hd, Map<Integer,List<Node>> map){
+        if(node == null){
+            return;
+        }
+        List<Node> nodeList = map.get(hd);
+        if(nodeList == null || nodeList.isEmpty()){
+            nodeList = new LinkedList<>();
+        }
+        nodeList.add(node);
+        map.put(hd,nodeList);
+        getVerticalOrder(node.getLeft(),hd-1,map);
+        getVerticalOrder(node.getRight(),hd+1,map);
     }
 
     public void connectRightNeighbourNode(Node node){
+        if(node == null){
+            return;
+        }
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(node);
+        queue.add(null);
+        while(!queue.isEmpty()){
+            Node temp = queue.peek();
+            queue.remove();
+            if(temp != null){
+                temp.setNeighbour(queue.peek());
+                if(temp.getLeft() != null){
+                    queue.add(temp.getLeft());
+                }
+                if(temp.getRight() != null){
+                    queue.add(temp.getRight());
+                }
+            }
+            else if(!queue.isEmpty()){
+                queue.add(null);
+            }
+        }
+    }
 
+    public void connectRightNeighbourNodeForCompleteTree(Node node){
+        node.setNeighbour(null);
+        connectRightNodeRecursively(node);
+    }
+
+    private void connectRightNodeRecursively(Node node){
+        if(node == null){
+            return;
+        }
+        if(node.getLeft() != null){
+            node.getLeft().setNeighbour(node.getRight());
+        }
+        if(node.getRight() != null){
+            if(node.getNeighbour() != null){
+                node.getRight().setNeighbour(node.getNeighbour().getLeft());
+            }
+            else{
+                node.getRight().setNeighbour(null);
+            }
+        }
+        connectRightNodeRecursively(node.getLeft());
+        connectRightNodeRecursively(node.getRight());
     }
 
     public void preOrderRecursive(Node node){

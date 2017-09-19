@@ -1,4 +1,4 @@
-package com.learn.common.arrays;
+package com.learn.datastructures.arrays;
 
 import java.util.ArrayList;
 import java.util.Collections;

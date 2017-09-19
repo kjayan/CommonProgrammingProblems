@@ -1,4 +1,4 @@
-package com.learn.lru;
+package com.learn.cache.lru;
 
 public class LRUCacheMain {
 

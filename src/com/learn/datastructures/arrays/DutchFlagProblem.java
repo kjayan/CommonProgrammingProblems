@@ -1,4 +1,4 @@
-package com.learn.common.arrays;
+package com.learn.datastructures.arrays;
 
 public class DutchFlagProblem {
 	private static int[] a = { 0, 1, 2, 2, 1, 0, 1, 2, 0 }; 
