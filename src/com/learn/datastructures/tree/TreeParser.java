@@ -357,6 +357,30 @@ public class TreeParser {
         getVerticalOrder(node.getRight(),hd+1,map);
     }
 
+    public void diagonalTraversal(Node node){
+        Map<Integer,List<Node>> map = new TreeMap<>();
+        int hd = 0;
+        getDiagonalOrder(node,hd,map);
+        for (Map.Entry<Integer, List<Node>> entry : map.entrySet()){
+            System.out.println(entry.getValue());
+        }
+    }
+
+    private void getDiagonalOrder(Node node, int hd, Map<Integer,List<Node>> map){
+        if(node == null){
+            return;
+        }
+        List<Node> nodeList = map.get(hd);
+        if(nodeList == null || nodeList.isEmpty()){
+            nodeList = new LinkedList<>();
+        }
+        nodeList.add(node);
+        map.put(hd,nodeList);
+        getVerticalOrder(node.getLeft(),hd+1,map);
+        getVerticalOrder(node.getRight(),hd,map);
+    }
+
+
     public void connectRightNeighbourNode(Node node){
         if(node == null){
             return;
