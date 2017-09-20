@@ -508,8 +508,41 @@ public class TreeParser {
             }
         }
     }
-    public void postOrderIterativeUsing1Stack(Node node){
+    public void postOrderIterativeUsing1Stack(Node node,List<Node> nodesList){
 
+        if(node == null){
+            return;
+        }
+
+        Stack<Node> stack = new Stack<>();
+        stack.push(node);
+        Node prev = null;
+
+        while(!stack.isEmpty()){
+            Node current = stack.peek();
+            if(prev == null || prev.getLeft().equals(current) || prev.getRight().equals(current)){
+                if(current.getLeft() != null){
+                    stack.push(current.getLeft());
+                }
+                else if(current.getRight() != null){
+                    stack.push(current.getRight());
+                }
+                else{
+                    stack.pop();
+                    nodesList.add(current);
+                }
+            }
+            else if(current.getLeft().equals(prev)){
+                if(current.getRight() != null){
+                    stack.push(current.getRight());
+                }
+                else{
+                    stack.pop();
+                    nodesList.add(current);
+                }
+            }
+            prev = current;
+        }
     }
 
     /**
