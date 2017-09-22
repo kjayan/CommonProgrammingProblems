@@ -182,8 +182,9 @@ public class TreeParser {
                 printGivenLevelTopDownSpiral(node.getRight(), level - 1,ltr);
             }
             else{
-                printGivenLevelTopDownSpiral(node.getLeft(), level - 1,ltr);
                 printGivenLevelTopDownSpiral(node.getRight(), level - 1,ltr);
+                printGivenLevelTopDownSpiral(node.getLeft(), level - 1,ltr);
+
             }
         }
 
@@ -376,8 +377,8 @@ public class TreeParser {
         }
         nodeList.add(node);
         map.put(hd,nodeList);
-        getVerticalOrder(node.getLeft(),hd+1,map);
-        getVerticalOrder(node.getRight(),hd,map);
+        getDiagonalOrder(node.getLeft(),hd+1,map);
+        getDiagonalOrder(node.getRight(),hd,map);
     }
 
 
