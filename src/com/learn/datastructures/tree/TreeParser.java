@@ -558,6 +558,7 @@ public class TreeParser {
 
         Stack<Node> stack1 = new Stack<>();
         Stack<Node> stack2 = new Stack<>();
+        stack1.push(node);
 
         while(!stack1.isEmpty()){
             Node temp = stack1.pop();
@@ -646,46 +647,6 @@ public class TreeParser {
     }
 
 
-    private void markRightSiblingIterative(Node root){
-        Queue<Node> queue = new LinkedList<>();
-        queue.add(root);
-        queue.add(null); //TO mark end of level
 
-        while(!queue.isEmpty()){
-            Node temp = queue.peek();
-            queue.remove();
-            if(temp !=  null){
-                temp.setRight(queue.peek());
-                if(temp.getLeft() != null){
-                    queue.add(temp.getLeft());
-                }
-                if(temp.getRight() != null){
-                    queue.add(temp.getRight());
-                }
-            }
-            else if(!queue.isEmpty()){
-                queue.add(null);  //While q is not empty, push null to makr end of level
-            }
-        }
-    }
-
-    public void markRightSiblingCompleteTree(Node node){
-        if(node == null){
-            return;
-        }
-        if(node.getLeft() != null){
-            node.getLeft().setRight(node.getRight());
-        }
-        if(node.getRight() != null){
-            if(node.getRight() != null){
-                node.getRight().setRight(node.getRight().getLeft());
-            }
-            else{
-                node.getRight().setRight(null);
-            }
-        }
-        markRightSiblingCompleteTree(node.getLeft());
-        markRightSiblingCompleteTree(node.getRight());
-    }
 
 }
